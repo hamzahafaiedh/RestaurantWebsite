@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Folks - Eat. Drink. Play.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Lato:wght@300;400;700&family=Lilita+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="logo">
+            <a href="#">
+                <svg class="logo-svg" viewBox="0 0 120 60" fill="currentColor">
+                    <text x="50%" y="25" text-anchor="middle" font-size="22" font-weight="bold" font-family="serif">LUCKY</text>
+                    <text x="50%" y="48" text-anchor="middle" font-size="22" font-weight="bold" font-family="serif">FOLKS</text>
+                    <text x="50%" y="58" text-anchor="middle" font-size="6" letter-spacing="3" font-family="sans-serif">EAT • DRINK • PLAY</text>
+                </svg>
+            </a>
+        </div>
+        <div class="header-right">
+            <a href="#reserve" class="btn-reserve">Réserver</a>
+            <button class="btn-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Side Navigation -->
+    <nav class="side-nav side-nav-left">
+        <span class="side-nav-text" data-section="eat">EAT</span>
+    </nav>
+    <nav class="side-nav side-nav-right">
+        <span class="side-nav-text" data-section="play">DRINK</span>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="public/Untitled video - Made with Clipchamp.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">EAT.</span>
+                <span class="title-line">DRINK.</span>
+                <span class="title-line">ENJOY.</span>
+            </h1>
+            <p class="hero-subtitle">LE RESTAURANT À JOUER DE KOEZIO</p>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-circle">
+                <svg class="scroll-text" viewBox="0 0 100 100">
+                    <defs>
+                        <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+                    </defs>
+                    <text>
+                        <textPath href="#circle">scroll * scroll * scroll * scroll * scroll * </textPath>
+                    </text>
+                </svg>
+                <div class="scroll-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M19 12l-7 7-7-7"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tagline Section -->
+    <section class="tagline-section" id="tagline">
+        <div class="tagline-icon">
+            <svg viewBox="0 0 50 60" fill="currentColor">
+                <path d="M25 5L5 20v25l20 15 20-15V20L25 5zm0 8l12 9v15l-12 9-12-9V22l12-9z"/>
+            </svg>
+        </div>
+        <h2 class="tagline-text">
+            <span class="tagline-line">UN LIEU POUR</span>
+            <span class="tagline-line highlight"><span class="underline">MANGER, JOUER</span></span>
+            <span class="tagline-line"><span class="underline">ET BOIRE UN VERRE</span></span>
+            <span class="tagline-line">AU MÊME ENDROIT.</span>
+        </h2>
+        <div class="tagline-decoration">
+            <svg viewBox="0 0 40 40" fill="currentColor">
+                <path d="M20 5l-5 10h-10l8 6-3 10 10-7 10 7-3-10 8-6h-10z"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <div class="about-left">
+                <h2 class="about-title">
+                    LUCKY FOLKS EST<br>
+                    UNE BRASSERIE À<br>
+                    JOUER, CONVIVIALE<br>
+                    ET OUVERTE À TOUS,<br>
+                    DANS L'ESPRIT FÊTE<br>
+                    FORAINE REVISITÉE.
+                </h2>
+            </div>
+            <div class="about-right">
+                <p class="about-intro"><strong>LUCKY FOLKS est restaurant-bar à jeux ludique qui s'inspire de l'univers des fêtes foraines à l'ancienne !</strong></p>
+                <p>Situé au cœur du Carré Sénart, près de Paris, ce lieu de vie original mêle cuisine maison, ambiance chaleureuse et jeux à partager entre amis, en famille ou entre collègues. <strong>Fléchettes, shuffleboard, jeux de société, terrains de pétanque, karaoké privatif, ou tout simplement verre en terrasse…</strong> il y en a pour tous les goûts !</p>
+                <p>Côté cuisine, place à la générosité : des plats faits maison, des produits frais, et une carte gourmande préparée par notre équipe.</p>
+                <p class="about-cta"><strong>Venez jouer, manger et vous détendre chez Lucky Folks, à Sénart !</strong></p>
+            </div>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80" alt="Food and drinks">
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="marquee-section">
+        <div class="marquee-image">
+            <img src="https://images.unsplash.com/photo-1529566652340-2c41a1eb6d93?w=1920&q=80" alt="Friends cheering">
+            <div class="marquee-overlay">
+                <div class="marquee-track">
+                    <div class="marquee-content">
+                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Split Section -->
+    <section class="split-section" id="split">
+        <div class="split-panel split-left">
+            <p class="split-subtitle">La salle de jeux parfaite pour</p>
+            <h2 class="split-title">MANGER.</h2>
+        </div>
+        <div class="split-panel split-right">
+            <p class="split-subtitle">Le restaurant idéal pour</p>
+            <h2 class="split-title">JOUER.</h2>
+        </div>
+    </section>
+
+    <!-- Ambiance Section -->
+    <section class="ambiance-section" id="ambiance">
+        <div class="ambiance-content">
+            <p class="ambiance-label">LE TOUT DANS UNE AMBIANCE</p>
+            <div class="ambiance-blob">
+                <img src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?w=800&q=80" alt="Colorful atmosphere">
+            </div>
+            <h2 class="ambiance-title">
+                <span class="char">S</span>
+                <span class="char">U</span>
+                <span class="char">R</span>
+                <span class="char">P</span>
+                <span class="char">R</span>
+                <span class="char">E</span>
+                <span class="char">N</span>
+                <span class="char">A</span>
+                <span class="char">N</span>
+                <span class="char">T</span>
+                <span class="char">E</span>
+            </h2>
+        </div>
+    </section>
+
+    <!-- Teambuilding Section -->
+    <section class="teambuilding-section" id="teambuilding">
+        <div class="teambuilding-blob">
+            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80" alt="Team having fun">
+        </div>
+        <div class="teambuilding-content">
+            <div class="teambuilding-icon">
+                <svg viewBox="0 0 30 30" fill="currentColor">
+                    <path d="M15 3c-1.5 0-2.7 1.2-2.7 2.7 0 .9.4 1.7 1.1 2.2l-3.4 5.1c-.3-.1-.6-.2-.9-.2-1 0-1.8.5-2.3 1.3l-3.8-1.9c.1-.3.1-.5.1-.8 0-1.5-1.2-2.7-2.7-2.7S0 10.2 0 11.7s1.2 2.7 2.7 2.7c.4 0 .8-.1 1.1-.2l4.1 2.1c-.1.3-.1.6-.1.9 0 1.5 1.2 2.7 2.7 2.7s2.7-1.2 2.7-2.7c0-.5-.1-.9-.3-1.3l3.2-4.8c.4.2.9.3 1.4.3s1-.1 1.4-.3l3.2 4.8c-.2.4-.3.8-.3 1.3 0 1.5 1.2 2.7 2.7 2.7s2.7-1.2 2.7-2.7-1.2-2.7-2.7-2.7c-.3 0-.6.1-.9.2l-3.4-5.1c.7-.5 1.1-1.3 1.1-2.2 0-1.5-1.2-2.7-2.7-2.7z"/>
+                </svg>
+            </div>
+            <h2 class="teambuilding-title">
+                PSSST,<br>
+                BESOIN D'UN BON<br>
+                TEAMBUILDING ?
+            </h2>
+            <a href="#" class="teambuilding-link">Découvrir les offres groupes</a>
+        </div>
+    </section>
+
+    <!-- Reserve Section -->
+    <section class="reserve-section" id="reserve">
+        <h2 class="reserve-title">
+            ALORS,<br>
+            ON RÉSERVE ?
+        </h2>
+        <a href="#" class="btn-reserve-large">Réserver</a>
+        <p class="reserve-hours">Ouvert du mardi au dimanche<br>Services midis et soirs</p>
+        <p class="reserve-faq"><span>UNE QUESTION ?</span> <a href="#">CONSULTER LA FAQ !</a></p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-newsletter">
+            <p class="newsletter-label">ÉVÈNEMENTS, ACTUALITÉS, NOUVEAUTÉS …</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Votre email" required>
+                <button type="submit">ok</button>
+            </form>
+            <label class="newsletter-consent">
+                <input type="checkbox" required>
+                <span>J'accepte le stockage de mes données et notre politique concernant les données récoltées - <a href="#">Voir les mentions légales</a></span>
+            </label>
+        </div>
+        <div class="footer-main">
+            <div class="footer-logo">
+                <svg class="logo-svg" viewBox="0 0 120 60" fill="currentColor">
+                    <text x="50%" y="25" text-anchor="middle" font-size="22" font-weight="bold" font-family="serif">LUCKY</text>
+                    <text x="50%" y="48" text-anchor="middle" font-size="22" font-weight="bold" font-family="serif">FOLKS</text>
+                    <text x="50%" y="58" text-anchor="middle" font-size="6" letter-spacing="3" font-family="sans-serif">EAT • DRINK • PLAY</text>
+                </svg>
+                <p class="footer-phone">01 64 13 13 04</p>
+                <address class="footer-address">
+                    Zone d'activités commerciales Carré Sénart<br>
+                    5-7 Allée du trait d'Union<br>
+                    77127 Lieusaint
+                </address>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+            </div>
+            <div class="footer-legal">
+                <p>COPYRIGHT ©2025</p>
+                <a href="#">MENTIONS LÉGALES</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <nav class="menu-nav">
+            <a href="#hero">Luckyfolks</a>
+            <a href="#about">Manger</a>
+            <a href="#split">Jouer</a>
+            <a href="#teambuilding">Offres groupes</a>
+            <a href="#ambiance">Ambiance</a>
+            <a href="#reserve">Évènements</a>
+        </nav>
+        <a href="#reserve" class="menu-reserve">Réserver</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
