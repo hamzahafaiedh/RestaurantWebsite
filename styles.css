@@ -580,7 +580,6 @@ button {
 
 .marquee-wrapper {
     width: 100%;
-    transform: rotate(-8deg);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
