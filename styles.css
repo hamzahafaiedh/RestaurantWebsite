@@ -455,6 +455,7 @@ button {
 .about-section {
     background: var(--color-red);
     padding: 10rem 4rem;
+    padding-bottom: 30rem;
     overflow: visible;
 }
 
@@ -622,9 +623,9 @@ button {
    Split Section
    ======================================== */
 .split-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 .split-panel {
@@ -634,14 +635,103 @@ button {
     justify-content: center;
     padding: 4rem 2rem;
     position: relative;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: flex 0.6s var(--transition-smooth);
+    flex: 1;
+    overflow: hidden;
+}
+
+.split-panel:hover {
+    flex: 1.1;
 }
 
 .split-left {
     background: var(--color-orange);
+    position: relative;
+}
+
+.split-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('public/unnamed (8).jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.6s var(--transition-smooth);
+}
+
+.split-left::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.6s var(--transition-smooth);
+    z-index: 0;
+}
+
+.split-left:hover::before {
+    opacity: 1;
+}
+
+.split-left:hover::after {
+    opacity: 1;
+}
+
+.split-left:hover {
+    background: var(--color-orange);
+}
+
+.split-left > * {
+    position: relative;
+    z-index: 1;
 }
 
 .split-right {
     background: var(--color-cream);
+    position: relative;
+}
+
+.split-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('public/Oreo-Nutella-Milkshake.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.6s var(--transition-smooth);
+}
+
+.split-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.6s var(--transition-smooth);
+    z-index: 0;
+}
+
+.split-right:hover::before {
+    opacity: 1;
+}
+
+.split-right:hover::after {
+    opacity: 1;
+}
+
+.split-right:hover {
+    background: var(--color-cream);
+}
+
+.split-right > * {
+    position: relative;
+    z-index: 1;
 }
 
 .split-subtitle {
@@ -671,6 +761,22 @@ button {
 
 .split-right .split-title {
     color: var(--color-green);
+}
+
+.split-left:hover .split-subtitle,
+.split-left:hover .split-title {
+    color: var(--color-white);
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.split-right:hover .split-subtitle,
+.split-right:hover .split-title {
+    color: var(--color-white);
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 /* ========================================
@@ -767,71 +873,6 @@ button {
 }
 
 /* ========================================
-   Teambuilding Section
-   ======================================== */
-.teambuilding-section {
-    min-height: 100vh;
-    background: var(--color-navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    position: relative;
-}
-
-.teambuilding-blob {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-    animation: blobMorph 10s ease-in-out infinite reverse;
-    opacity: 0.9;
-}
-
-.teambuilding-blob img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.teambuilding-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-}
-
-.teambuilding-icon {
-    width: 40px;
-    height: 40px;
-    color: var(--color-gold);
-    margin: 0 auto 2rem;
-}
-
-.teambuilding-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 900;
-    line-height: 1.1;
-    color: var(--color-white);
-    margin-bottom: 2rem;
-}
-
-.teambuilding-link {
-    font-family: var(--font-script);
-    font-size: 1.5rem;
-    color: var(--color-gold);
-    border-bottom: 2px solid var(--color-gold);
-    padding-bottom: 0.25rem;
-    transition: all 0.3s var(--transition-smooth);
-}
-
-.teambuilding-link:hover {
-    color: var(--color-gold-light);
-    border-color: var(--color-gold-light);
-}
-
-/* ========================================
    Reserve Section
    ======================================== */
 .reserve-section {
@@ -846,12 +887,16 @@ button {
 }
 
 .reserve-title {
-    font-family: var(--font-display);
+    font-family: 'Lilita One', var(--font-display);
     font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 900;
-    line-height: 1;
+    font-weight: 400;
+    line-height: 0.85;
     color: var(--color-gold);
     margin-bottom: 2rem;
+    text-shadow:
+        4px 4px 0 rgba(0, 0, 0, 0.4),
+        8px 8px 0 rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.02em;
 }
 
 .btn-reserve-large {

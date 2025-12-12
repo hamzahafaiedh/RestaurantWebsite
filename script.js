@@ -60,7 +60,7 @@ function initMenu() {
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
         '.tagline-text, .tagline-icon, .about-title, .about-right, ' +
-        '.split-panel, .ambiance-content, .teambuilding-content, ' +
+        '.split-panel, .ambiance-content, ' +
         '.reserve-title, .btn-reserve-large'
     );
     
@@ -114,7 +114,6 @@ function initSideNavigation() {
         { id: 'about', navText: 'EAT' },
         { id: 'split', navText: 'DRINK' },
         { id: 'ambiance', navText: 'DRINK' },
-        { id: 'teambuilding', navText: 'PLAY' },
         { id: 'reserve', navText: 'PLAY' }
     ];
     
@@ -151,7 +150,7 @@ function initSideNavigation() {
  */
 function initParallax() {
     const heroImage = document.querySelector('.hero-image');
-    const blobs = document.querySelectorAll('.ambiance-blob, .teambuilding-blob');
+    const blobs = document.querySelectorAll('.ambiance-blob');
     
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
@@ -216,7 +215,6 @@ function initSectionColors() {
         'about': { logo: '#e6a23c', text: '#ffffff' },
         'split': { logo: '#1e2756', text: '#1e2756' },
         'ambiance': { logo: '#e6a23c', text: '#ffffff' },
-        'teambuilding': { logo: '#e6a23c', text: '#ffffff' },
         'reserve': { logo: '#e6a23c', text: '#ffffff' }
     };
     
@@ -267,7 +265,7 @@ window.addEventListener('load', () => {
  */
 if (window.matchMedia('(min-width: 1024px)').matches) {
     document.addEventListener('mousemove', (e) => {
-        const blobs = document.querySelectorAll('.ambiance-blob, .teambuilding-blob');
+        const blobs = document.querySelectorAll('.ambiance-blob');
         const mouseX = e.clientX / window.innerWidth - 0.5;
         const mouseY = e.clientY / window.innerHeight - 0.5;
         
