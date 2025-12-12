@@ -178,12 +178,19 @@ function initHeaderScroll() {
     if (!header) return;
 
     const updateHeader = () => {
-        // Keep header transparent
-        header.style.background = 'transparent';
-        header.style.backdropFilter = 'none';
+        // Only keep transparent on desktop, let CSS handle mobile/tablet
+        if (window.innerWidth > 768) {
+            header.style.background = 'transparent';
+            header.style.backdropFilter = 'none';
+        } else {
+            // Remove inline styles on mobile/tablet to let CSS take over
+            header.style.background = '';
+            header.style.backdropFilter = '';
+        }
     };
 
     window.addEventListener('scroll', throttle(updateHeader, 50));
+    window.addEventListener('resize', throttle(updateHeader, 100));
     updateHeader();
 }
 
