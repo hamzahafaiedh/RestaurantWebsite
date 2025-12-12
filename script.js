@@ -298,4 +298,96 @@ function initScrollProgress() {
 // Comment out default rotation animation and use scroll-based instead
 // Uncomment below to enable scroll-based rotation
 // document.addEventListener('DOMContentLoaded', initScrollProgress);
+document.addEventListener("DOMContentLoaded", () => {
+    initWaveMarquee();
+});
 
+/**
+ * Wave Marquee Animation - Lucky Folks Style
+ * Creates a smooth traveling wave effect on scrolling text
+ */
+function initWaveMarquee() {
+    if (typeof gsap === "undefined") return;
+
+    const tracks = document.querySelectorAll(".marquee-track");
+    if (!tracks.length) return;
+
+    // Split text into characters using SplitType
+    if (typeof SplitType !== "undefined") {
+        document.querySelectorAll(".marquee-text").forEach(text => {
+            new SplitType(text, { types: "chars" });
+        });
+    }
+
+    // Wait for DOM update after splitting
+    requestAnimationFrame(() => {
+        // Calculate track width for seamless loop
+        const firstTrack = document.getElementById("gsap-marquee-1");
+        if (!firstTrack) return;
+        
+        const singleTextWidth = firstTrack.querySelector(".marquee-text")?.offsetWidth || 0;
+        const totalWidth = singleTextWidth * 2; // Width of 2 text spans for seamless loop
+
+        // -----------------------------
+        // HORIZONTAL SCROLL ANIMATION
+        // -----------------------------
+        tracks.forEach((track, index) => {
+            // Different speeds for each row
+            const duration = 25 + (index * 5);
+            
+            gsap.to(track, {
+                x: -totalWidth,
+                duration: duration,
+                ease: "none",
+                repeat: -1,
+                modifiers: {
+                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                }
+            });
+        });
+
+        // -----------------------------
+        // WAVE ANIMATION - Ocean Wave Effect
+        // -----------------------------
+        // Text rides on top of a traveling water wave
+        const waveConfig = {
+            amplitude: 25,       // Wave height (bigger wave)
+            speed: 0.025,        // How fast the wave travels
+            waveLength: 250      // Distance between wave peaks (in pixels)
+        };
+
+        // Get all rows for the wave effect
+        const rows = document.querySelectorAll(".marquee-row");
+        
+        // Smooth continuous wave animation using GSAP ticker
+        let time = 0;
+        
+        gsap.ticker.add(() => {
+            time += waveConfig.speed;
+            
+            rows.forEach((row, rowIndex) => {
+                const chars = row.querySelectorAll(".char");
+                if (!chars.length) return;
+                
+                // Phase offset for each row (creates layered wave effect)
+                chars.forEach((char) => {
+                    // Get character's position relative to viewport
+                    const rect = char.getBoundingClientRect();
+                    const charX = rect.left + rect.width / 2;
+                    
+                    // Calculate wave based on horizontal position
+                    // Wave travels from right to left (opposite to scroll direction)
+                    const phase = (charX / waveConfig.waveLength) + time ;
+                    const y = Math.sin(phase) * waveConfig.amplitude;
+                    
+                    // Tilt based on wave slope (cosine = derivative of sine)
+                    // Letters tilt as they ride up and down the wave
+                    const rotation = Math.cos(phase) * 8; // 8 degrees max tilt
+                    
+                    // Apply vertical displacement and rotation
+                    char.style.transform = `translateY(${y}px) rotate(${rotation}deg)`;
+                });
+            });
+        });
+    });
+}

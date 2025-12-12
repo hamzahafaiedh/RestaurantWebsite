@@ -85,20 +85,35 @@
         </div>
         <div class="about-image">
             <img src="public/berber home.jpg" alt="Berber home">
-        </div>
-    </section>
-
-    <!-- Marquee Section -->
-    <section class="marquee-section">
-        <div class="marquee-image">
-            <img src="https://images.unsplash.com/photo-1529566652340-2c41a1eb6d93?w=1920&q=80" alt="Friends cheering">
+            <!-- Wavy Text Overlay -->
             <div class="marquee-overlay">
-                <div class="marquee-track">
-                    <div class="marquee-content">
-                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
-                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
-                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
-                        <span>AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                <div class="marquee-wrapper">
+                    <!-- Row 1 -->
+                    <div class="marquee-row">
+                        <div class="marquee-track" id="gsap-marquee-1">
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        </div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="marquee-row">
+                        <div class="marquee-track" id="gsap-marquee-2">
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        </div>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="marquee-row">
+                        <div class="marquee-track" id="gsap-marquee-3">
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                            <span class="marquee-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -221,6 +236,11 @@
         </nav>
         <a href="#reserve" class="menu-reserve">Réserver</a>
     </div>
+
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- SplitType for character splitting -->
+    <script src="https://unpkg.com/split-type"></script>
 
     <script src="script.js"></script>
 </body>

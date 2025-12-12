@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Folks - Advanced Marquee Wave (SplitType)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: #1e2756;
+            font-family: 'Lilita One', sans-serif;
+        }
+
+        /* Hero Section */
+        .hero-marquee {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background Image */
+        .hero-marquee-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hero-marquee-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-marquee-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 0, 0, 0.5) 50%,
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            z-index: 2;
+        }
+
+        /* Marquee Container */
+        .marquee-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            transform: rotate(-8deg) translateY(-10%);
+            pointer-events: none;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+        }
+
+        .marquee-text {
+            font-family: 'Lilita One', sans-serif;
+            font-size: clamp(80px, 15vw, 200px);
+            font-weight: 400;
+            color: #e6a23c;
+            text-transform: uppercase;
+            padding: 0 4rem;
+            line-height: 1;
+            text-shadow:
+                4px 4px 0 rgba(0, 0, 0, 0.3),
+                8px 8px 0 rgba(0, 0, 0, 0.15);
+            will-change: transform;
+        }
+
+        /* For SplitType */
+        .marquee-text .char {
+            display: inline-block;
+            will-change: transform;
+        }
+
+        .marquee-row {
+            margin-bottom: 2rem;
+        }
+
+        .marquee-row:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Marquee Section -->
+    <section class="hero-marquee">
+        <!-- Background -->
+        <div class="hero-marquee-bg">
+            <img src="https://images.unsplash.com/photo-1529566652340-2c41a1eb6d93?w=1920&q=80" alt="Friends enjoying">
+            <div class="hero-marquee-overlay"></div>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="marquee-container">
+            <!-- Row 1 -->
+            <div class="marquee-row">
+                <div class="marquee-track" id="marquee1">
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="marquee-row">
+                <div class="marquee-track" id="marquee2">
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                    <span class="marquee-text split-text">AIMER LA VIE ET TOUT CE QUI VA AVEC</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GSAP & SplitType -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+    <script>
+        // ====================================================
+        // LUCKY FOLKS ADVANCED MARQUEE - PER-LETTER WAVE
+        // ====================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const marquee1 = document.getElementById('marquee1');
+            const marquee2 = document.getElementById('marquee2');
+
+            // Split all text elements into characters
+            const splitTexts = new SplitType('.split-text', {
+                types: 'chars',
+                tagName: 'span'
+            });
+
+            const texts1 = marquee1.querySelectorAll('.marquee-text');
+            const texts2 = marquee2.querySelectorAll('.marquee-text');
+
+            // Get width for seamless loop
+            const textWidth = texts1[0].offsetWidth;
+            const totalWidth = textWidth * 2;
+
+            // ====================================
+            // HORIZONTAL SCROLL ANIMATION
+            // ====================================
+
+            // Row 1: Scroll left
+            gsap.to(marquee1, {
+                x: -totalWidth,
+                duration: 30,
+                ease: "none",
+                repeat: -1,
+                modifiers: {
+                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                }
+            });
+
+            // Row 2: Scroll left (different speed)
+            gsap.to(marquee2, {
+                x: -totalWidth,
+                duration: 25,
+                ease: "none",
+                repeat: -1,
+                modifiers: {
+                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                }
+            });
+
+            // ====================================
+            // PER-LETTER WAVE ANIMATION
+            // ====================================
+
+            // Animate each character in row 1
+            texts1.forEach((textElement, textIndex) => {
+                const chars = textElement.querySelectorAll('.char');
+
+                chars.forEach((char, charIndex) => {
+                    const timeline = gsap.timeline({
+                        repeat: -1,
+                        delay: (textIndex * 0.5) + (charIndex * 0.02)
+                    });
+
+                    timeline.to(char, {
+                        y: -15,
+                        rotation: 5,
+                        skewX: 3,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    })
+                    .to(char, {
+                        y: 15,
+                        rotation: -5,
+                        skewX: -3,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    })
+                    .to(char, {
+                        y: 0,
+                        rotation: 0,
+                        skewX: 0,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    });
+                });
+            });
+
+            // Animate each character in row 2 (different timing)
+            texts2.forEach((textElement, textIndex) => {
+                const chars = textElement.querySelectorAll('.char');
+
+                chars.forEach((char, charIndex) => {
+                    const timeline = gsap.timeline({
+                        repeat: -1,
+                        delay: (textIndex * 0.5) + (charIndex * 0.02) + 0.3
+                    });
+
+                    timeline.to(char, {
+                        y: 15,
+                        rotation: -5,
+                        skewX: -3,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    })
+                    .to(char, {
+                        y: -15,
+                        rotation: 5,
+                        skewX: 3,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    })
+                    .to(char, {
+                        y: 0,
+                        rotation: 0,
+                        skewX: 0,
+                        duration: 0.8,
+                        ease: "sine.inOut"
+                    });
+                });
+            });
+
+            // ====================================
+            // OPTIONAL: MOUSE INTERACTION
+            // ====================================
+
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            // Subtle mouse parallax on container
+            gsap.ticker.add(() => {
+                const container = document.querySelector('.marquee-container');
+                gsap.to(container, {
+                    rotationY: mouseX * 5,
+                    rotationX: -mouseY * 5,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
