@@ -179,13 +179,9 @@ function initHeaderScroll() {
     if (!header) return;
 
     const updateHeader = () => {
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(0, 0, 0, 0.6)';
-            header.style.backdropFilter = 'blur(20px)';
-        } else {
-            header.style.background = 'rgba(0, 0, 0, 0.4)';
-            header.style.backdropFilter = 'blur(20px)';
-        }
+        // Keep header transparent
+        header.style.background = 'transparent';
+        header.style.backdropFilter = 'none';
     };
 
     window.addEventListener('scroll', throttle(updateHeader, 50));
