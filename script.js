@@ -3,14 +3,23 @@
  * Handles animations, scroll effects, and menu functionality
  */
 
+// Performance optimization: Reduce Motion Support
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
     initMenu();
     initScrollReveal();
     initSmoothScroll();
     initSideNavigation();
-    initParallax();
+
+    // Only run heavy animations if user doesn't prefer reduced motion
+    if (!prefersReducedMotion) {
+        initParallax();
+    }
+
     initHeaderScroll();
+    optimizeVideoLoading();
 });
 
 /**
@@ -146,27 +155,37 @@ function initSideNavigation() {
 }
 
 /**
- * Parallax Effects
+ * Parallax Effects - Optimized with RAF
  */
 function initParallax() {
     const heroImage = document.querySelector('.hero-image');
     const blobs = document.querySelectorAll('.ambiance-blob');
-    
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+
+    const updateParallax = () => {
         const scrollY = window.scrollY;
-        
+
         // Hero parallax
         if (heroImage && scrollY < window.innerHeight) {
             heroImage.style.transform = `scale(1.1) translateY(${scrollY * 0.3}px)`;
         }
-        
+
         // Blob floating effect
         blobs.forEach((blob, index) => {
             const speed = 0.05 + (index * 0.02);
             const yOffset = Math.sin(scrollY * 0.002 + index) * 20;
-            blob.style.transform = `translateY(${yOffset}px)`;
+            blob.style.transform = `translateY(${yOffset}px) translateZ(0)`;
         });
-    });
+
+        ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }, { passive: true });
 }
 
 /**
@@ -268,21 +287,33 @@ window.addEventListener('load', () => {
 });
 
 /**
- * Mouse Move Effect for Blobs (Desktop Only)
+ * Mouse Move Effect for Blobs (Desktop Only) - Optimized
  */
-if (window.matchMedia('(min-width: 1024px)').matches) {
-    document.addEventListener('mousemove', (e) => {
+if (window.matchMedia('(min-width: 1024px)').matches && !prefersReducedMotion) {
+    let mouseTicking = false;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    const updateBlobPosition = () => {
         const blobs = document.querySelectorAll('.ambiance-blob');
-        const mouseX = e.clientX / window.innerWidth - 0.5;
-        const mouseY = e.clientY / window.innerHeight - 0.5;
-        
         blobs.forEach((blob, index) => {
             const intensity = 20 + (index * 10);
             const x = mouseX * intensity;
             const y = mouseY * intensity;
-            blob.style.transform = `translate(${x}px, ${y}px)`;
+            blob.style.transform = `translate(${x}px, ${y}px) translateZ(0)`;
         });
-    });
+        mouseTicking = false;
+    };
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX / window.innerWidth - 0.5;
+        mouseY = e.clientY / window.innerHeight - 0.5;
+
+        if (!mouseTicking) {
+            requestAnimationFrame(updateBlobPosition);
+            mouseTicking = true;
+        }
+    }, { passive: true });
 }
 
 /**
@@ -290,29 +321,62 @@ if (window.matchMedia('(min-width: 1024px)').matches) {
  */
 function initScrollProgress() {
     const scrollText = document.querySelector('.scroll-text');
-    
     if (!scrollText) return;
-    
-    window.addEventListener('scroll', () => {
+
+    let scrollTicking = false;
+
+    const updateScrollRotation = () => {
         const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        const rotation = scrollProgress * 360 * 2; // 2 full rotations over page scroll
-        scrollText.style.transform = `rotate(${rotation}deg)`;
-    });
+        const rotation = scrollProgress * 360 * 2;
+        scrollText.style.transform = `rotate(${rotation}deg) translateZ(0)`;
+        scrollTicking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+            requestAnimationFrame(updateScrollRotation);
+            scrollTicking = true;
+        }
+    }, { passive: true });
 }
 
-// Comment out default rotation animation and use scroll-based instead
-// Uncomment below to enable scroll-based rotation
-// document.addEventListener('DOMContentLoaded', initScrollProgress);
+/**
+ * Optimize Video Loading
+ */
+function optimizeVideoLoading() {
+    const heroVideo = document.querySelector('.hero-video');
+    if (!heroVideo) return;
+
+    // Reduce video quality on mobile for faster loading
+    if (window.innerWidth < 768) {
+        heroVideo.playbackRate = 1;
+        // Add a lower resolution source for mobile if available
+    }
+
+    // Pause video when not in viewport to save resources
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                heroVideo.play().catch(e => console.log('Video play failed:', e));
+            } else {
+                heroVideo.pause();
+            }
+        });
+    }, { threshold: 0.25 });
+
+    videoObserver.observe(heroVideo);
+}
 document.addEventListener("DOMContentLoaded", () => {
     initWaveMarquee();
 });
 
 /**
- * Wave Marquee Animation - Lucky Folks Style
+ * Wave Marquee Animation - Optimized for Performance
  * Creates a smooth traveling wave effect on scrolling text
  */
 function initWaveMarquee() {
     if (typeof gsap === "undefined") return;
+    if (prefersReducedMotion) return; // Skip if user prefers reduced motion
 
     const tracks = document.querySelectorAll(".marquee-track");
     if (!tracks.length) return;
@@ -329,17 +393,16 @@ function initWaveMarquee() {
         // Calculate track width for seamless loop
         const firstTrack = document.getElementById("gsap-marquee-1");
         if (!firstTrack) return;
-        
+
         const singleTextWidth = firstTrack.querySelector(".marquee-text")?.offsetWidth || 0;
-        const totalWidth = singleTextWidth * 2; // Width of 2 text spans for seamless loop
+        const totalWidth = singleTextWidth * 2;
 
         // -----------------------------
         // HORIZONTAL SCROLL ANIMATION
         // -----------------------------
         tracks.forEach((track, index) => {
-            // Different speeds for each row
             const duration = 25 + (index * 5);
-            
+
             gsap.to(track, {
                 x: -totalWidth,
                 duration: duration,
@@ -347,50 +410,62 @@ function initWaveMarquee() {
                 repeat: -1,
                 modifiers: {
                     x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-                }
+                },
+                force3D: true // Force GPU acceleration
             });
         });
 
         // -----------------------------
-        // WAVE ANIMATION - Ocean Wave Effect
+        // WAVE ANIMATION - Optimized
         // -----------------------------
-        // Text rides on top of a traveling water wave
         const waveConfig = {
-            amplitude: 25,       // Wave height (bigger wave)
-            speed: 0.025,        // How fast the wave travels
-            waveLength: 250      // Distance between wave peaks (in pixels)
+            amplitude: 25,
+            speed: 0.02, // Slightly reduced for better performance
+            waveLength: 250
         };
 
-        // Get all rows for the wave effect
         const rows = document.querySelectorAll(".marquee-row");
-        
-        // Smooth continuous wave animation using GSAP ticker
         let time = 0;
-        
+        let frameCount = 0;
+
+        // Only update wave animation if section is in viewport
+        const marqueeSection = document.querySelector(".about-section");
+        let isInViewport = false;
+
+        if (marqueeSection) {
+            const marqueeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isInViewport = entry.isIntersecting;
+                });
+            }, { threshold: 0.1 });
+
+            marqueeObserver.observe(marqueeSection);
+        }
+
         gsap.ticker.add(() => {
+            // Skip animation if not in viewport
+            if (!isInViewport) return;
+
+            // Throttle to every 2 frames for better performance
+            frameCount++;
+            if (frameCount % 2 !== 0) return;
+
             time += waveConfig.speed;
-            
-            rows.forEach((row, rowIndex) => {
+
+            rows.forEach((row) => {
                 const chars = row.querySelectorAll(".char");
                 if (!chars.length) return;
-                
-                // Phase offset for each row (creates layered wave effect)
+
                 chars.forEach((char) => {
-                    // Get character's position relative to viewport
                     const rect = char.getBoundingClientRect();
                     const charX = rect.left + rect.width / 2;
-                    
-                    // Calculate wave based on horizontal position
-                    // Wave travels from right to left (opposite to scroll direction)
-                    const phase = (charX / waveConfig.waveLength) + time ;
+
+                    const phase = (charX / waveConfig.waveLength) + time;
                     const y = Math.sin(phase) * waveConfig.amplitude;
-                    
-                    // Tilt based on wave slope (cosine = derivative of sine)
-                    // Letters tilt as they ride up and down the wave
-                    const rotation = Math.cos(phase) * 8; // 8 degrees max tilt
-                    
-                    // Apply vertical displacement and rotation
-                    char.style.transform = `translateY(${y}px) rotate(${rotation}deg)`;
+                    const rotation = Math.cos(phase) * 8;
+
+                    // Use transform with translateZ for GPU acceleration
+                    char.style.transform = `translateY(${y}px) rotate(${rotation}deg) translateZ(0)`;
                 });
             });
         });
